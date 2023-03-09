@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:weather/core/utils/constance.dart';
@@ -13,10 +12,11 @@ class RemoteDataSource implements BaseRemoteDataSource {
   Future<WeatherModel?> getWeatherByCityName(String cityName) async {
     try {
       final response = await Dio().get(
-          '${AppConstance.baseUrl}/weather?q=$cityName,uk&callback=test&appid=${AppConstance.apiKey}');
+          '${AppConstance.baseUrl}/weather?q=$cityName&appid=${AppConstance.apiKey}');
       print(response);
-      return WeatherModel.fromJson(json.decode(response.data));
+      return WeatherModel.fromJson(response.data);
     } catch (e) {
+      print(e.toString());
       return null;
     }
   }
